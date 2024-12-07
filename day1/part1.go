@@ -17,6 +17,35 @@ func abs(a int) int {
 	return -a
 }
 
+func part1(left []int, right []int) int {
+	slices.Sort(left)
+	slices.Sort(right)
+
+	sum := 0
+
+	for i := 0; i < len(left); i++ {
+		sum += abs(left[i] - right[i])
+	}
+	return sum
+}
+
+func countAppearences(number int, list []int) int {
+	total := 0
+	for _, v := range list {
+		if v == number {
+			total++
+		}
+	}
+	return total
+}
+func part2(left []int, right []int) int {
+	score := 0
+	for _, v := range left {
+		score += v * countAppearences(v, right)
+	}
+	return score
+}
+
 func main() {
 	file, err := os.Open("./input.txt")
 	if err != nil {
@@ -43,13 +72,6 @@ func main() {
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
-	slices.Sort(left)
-	slices.Sort(right)
-
-	sum := 0
-
-	for i := 0; i < len(left); i++ {
-		sum += abs(left[i] - right[i])
-	}
-	fmt.Println(sum)
+	fmt.Println(part1(left, right))
+	fmt.Println(part2(left, right))
 }
